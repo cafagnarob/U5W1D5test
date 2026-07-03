@@ -239,16 +239,6 @@ public class Runner implements CommandLineRunner {
 */
 
 
-// prova cambio di stato -> se la data della prenotazione è oggi lo stato si aggiorna ad OCCUPATO
-        Utente u3 = this.utenteService.findById(3);
-
-        Postazione p10 = this.postazioneService.findById(10);
-
-        Prenotazione pre31 = new Prenotazione(LocalDate.now(), p10, u3, 15);
-
-        this.prenotazioniService.saveNewPrenotazione(pre31);
-
-
         System.out.println("\n===== TEST METODI SERVICE =====\n");
 
         // 1. Test ricerca per tipo e città

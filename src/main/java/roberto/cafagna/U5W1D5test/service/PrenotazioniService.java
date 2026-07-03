@@ -2,7 +2,6 @@ package roberto.cafagna.U5W1D5test.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import roberto.cafagna.U5W1D5test.Enum.StatoPostazione;
 import roberto.cafagna.U5W1D5test.entities.Postazione;
 import roberto.cafagna.U5W1D5test.entities.Prenotazione;
 import roberto.cafagna.U5W1D5test.exception.NotFoundException;
@@ -58,11 +57,9 @@ public class PrenotazioniService {
             throw new ValidationException("Numero occupanti superiore alla capienza massima della postazione");
 
         this.prenotazioneRepository.save(newPrenotazione);
-        if (newPrenotazione.getDataDiPrenotazione().isEqual(LocalDate.now())) {
-            postazione.setStatoPostazione(StatoPostazione.OCCUPATO);
-            this.postazioniRepository.save(postazione);
-            log.info("La postazione con ID: " + postazione.getId() + " è stata impostata come OCCUPATO");
-        }
+
+        this.postazioniRepository.save(postazione);
+
         log.info("La prenotazione di " + newPrenotazione.getUtente().getNome() + " il " + newPrenotazione.getDataDiPrenotazione() + " è stato salvato correttamente");
     }
 
@@ -76,10 +73,9 @@ public class PrenotazioniService {
         Prenotazione fromDB = this.findById(prenotazioneId);
         Postazione postazione = fromDB.getPostazione();
         this.prenotazioneRepository.delete(fromDB);
-        if (fromDB.getDataDiPrenotazione().isEqual(LocalDate.now())) {
-            postazione.setStatoPostazione(StatoPostazione.LIBERO);
-            this.postazioniRepository.save(postazione);
-        }
+
+        this.postazioniRepository.save(postazione);
+
         log.info("L'elemento con ID: " + prenotazioneId + " è stato eliminato correttamente");
     }
 
@@ -106,13 +102,5 @@ public class PrenotazioniService {
         return this.prenotazioneRepository.findByUtenteId(utenteId);
     }
 
-    public void liberaPostazione(long prenotazioneId) {
-        Prenotazione preFromDB = this.findById(prenotazioneId);
-        if (preFromDB.getPostazione().getStatoPostazione() == StatoPostazione.OCCUPATO
-                && !preFromDB.getFinePrenotazione().isAfter(LocalDate.now())) {
-            preFromDB.getPostazione().setStatoPostazione(StatoPostazione.LIBERO);
-            this.prenotazioneRepository.save(preFromDB);
-        } else
-            System.out.println("questa postazione è ancora in uso , la sua prenotazione terminerà il " + preFromDB.getFinePrenotazione());
-    }
+
 }

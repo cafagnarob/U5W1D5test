@@ -61,10 +61,6 @@ public class PostazioneService {
             throw new ValidationException("Numero massimo occupanti non plausibile");
         }
 
-        if (newPostazione.getStatoPostazione() == null) {
-            throw new ValidationException("Specificare lo stato della postazione");
-        }
-
         this.postazioniRepository.save(newPostazione);
         log.info("L'elemento " + newPostazione.getId() + " è stato salvato correttamente");
     }
@@ -98,5 +94,5 @@ public class PostazioneService {
         return this.postazioniRepository.findByTipoAndCitta(tipo, citta);
     }
 
-    
+
 }

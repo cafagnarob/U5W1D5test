@@ -29,11 +29,6 @@ public class Postazione {
     @Column(nullable = false)
     private TipoPostazione tipoPostazione;
 
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatoPostazione statoPostazione;
-
 
     @Setter
     @Column(nullable = false)
@@ -51,7 +46,6 @@ public class Postazione {
         this.codiceUnivoco = UUID.randomUUID().toString();
         this.descrizione = descrizione;
         this.tipoPostazione = tipoPostazione;
-        this.statoPostazione = statoPostazione;
         this.nMaxOccupanti = nMaxOccupanti;
         this.edificio = edificio;
     }
@@ -62,7 +56,6 @@ public class Postazione {
                 "id=" + id +
                 ", descrizione='" + descrizione + '\'' +
                 ", tipoPostazione=" + tipoPostazione +
-                ", statoPostazione=" + statoPostazione +
                 ", nMaxOccupanti=" + nMaxOccupanti +
                 ", edificio=" + edificio +
                 '}';

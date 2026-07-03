@@ -9,6 +9,10 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"id_postazione", "dataDiPrenotazione"}),
+        @UniqueConstraint(columnNames = {"id_utente", "dataDiPrenotazione"})
+})
 public class Prenotazione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +30,8 @@ public class Prenotazione {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_utente", nullable = false)
+    @JoinColumn(name = "id_utente",
+            nullable = false)
     private Utente utente;
 
 
@@ -42,5 +47,18 @@ public class Prenotazione {
         this.postazione = postazione;
         this.utente = utente;
         this.nOccupanti = nOccupanti;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Prenotazione{" +
+                "id=" + id +
+                ", dataDiPrenotazione=" + dataDiPrenotazione +
+                ", finePrenotazione=" + finePrenotazione +
+                ", postazione=" + postazione +
+                ", utente=" + utente +
+                ", nOccupanti=" + nOccupanti +
+                '}';
     }
 }

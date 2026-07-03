@@ -30,4 +30,14 @@ public class Utente {
         this.nome = nome;
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

@@ -33,11 +33,11 @@ public class Edificio {
 
     @Override
     public String toString() {
-        return "Edificio{\n" +
-                "id=" + id + "\n" +
-                ", nome='" + nome + "\n" +
-                ", indirizzo='" + indirizzo + "\n" +
-                ", citta='" + citta + "\n" +
-                "} \n";
+        return "Edificio{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", indirizzo='" + indirizzo + '\'' +
+                ", citta='" + citta + '\'' +
+                '}';
     }
 }

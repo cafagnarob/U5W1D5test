@@ -14,6 +14,8 @@ public interface PrenotazioneRepository extends JpaRepository<Prenotazione, Long
 
     List<Prenotazione> findByUtenteId(long id);
 
+    List<Prenotazione> findByPostazioneId(long postazioneId);
+
     boolean existsByUtenteIdAndDataDiPrenotazione(long utenteId, LocalDate data);
 
     boolean existsByPostazioneIdAndDataDiPrenotazione(long postazioneId, LocalDate data);

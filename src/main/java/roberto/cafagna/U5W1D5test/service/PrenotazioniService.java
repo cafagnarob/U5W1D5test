@@ -41,8 +41,6 @@ public class PrenotazioniService {
 
     public void saveNewPrenotazione(Prenotazione newPrenotazione) {
         Postazione postazione = newPrenotazione.getPostazione();
-        if (postazione.getStatoPostazione() == StatoPostazione.OCCUPATO)
-            throw new ValidationException("La postazione con ID: " + postazione.getId() + " non è disponibile (stato OCCUPATO)");
 
         boolean existsFromDB = this.prenotazioneRepository.existsByUtenteIdAndDataDiPrenotazione
                 (newPrenotazione.getUtente().getId(), newPrenotazione.getDataDiPrenotazione());
@@ -66,6 +64,11 @@ public class PrenotazioniService {
             log.info("La postazione con ID: " + postazione.getId() + " è stata impostata come OCCUPATO");
         }
         log.info("La prenotazione di " + newPrenotazione.getUtente().getNome() + " il " + newPrenotazione.getDataDiPrenotazione() + " è stato salvato correttamente");
+    }
+
+
+    public List<Prenotazione> calendarioPostazione(long postazioneId) {
+        return this.prenotazioneRepository.findByPostazioneId(postazioneId);
     }
 
 
@@ -101,5 +104,15 @@ public class PrenotazioniService {
 
     public List<Prenotazione> findByUtenteId(long utenteId) {
         return this.prenotazioneRepository.findByUtenteId(utenteId);
+    }
+
+    public void liberaPostazione(long prenotazioneId) {
+        Prenotazione preFromDB = this.findById(prenotazioneId);
+        if (preFromDB.getPostazione().getStatoPostazione() == StatoPostazione.OCCUPATO
+                && !preFromDB.getFinePrenotazione().isAfter(LocalDate.now())) {
+            preFromDB.getPostazione().setStatoPostazione(StatoPostazione.LIBERO);
+            this.prenotazioneRepository.save(preFromDB);
+        } else
+            System.out.println("questa postazione è ancora in uso , la sua prenotazione terminerà il " + preFromDB.getFinePrenotazione());
     }
 }

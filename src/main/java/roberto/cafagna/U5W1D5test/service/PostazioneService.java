@@ -98,5 +98,5 @@ public class PostazioneService {
         return this.postazioniRepository.findByTipoAndCitta(tipo, citta);
     }
 
-
+    
 }

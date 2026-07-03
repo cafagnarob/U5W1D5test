@@ -13,7 +13,7 @@ public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Setter
     @Column(nullable = false, unique = true)
     private String userName;
 
